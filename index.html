@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+     integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Fetch</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="col-12 text-center">Daft punk</h1>
+        </div>
+    </div>
+    <script>
+        window.onload= () =>{
+        fetchMusic();
+        fetchMusic2();
+        };
+        const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com',
+		'X-RapidAPI-Key': '7fe890577dmshc5850220bf7884ep1b9044jsndc74e81940ba'
+	}
+};
+        const fetchMusic = () => {
+            fetch('https://deezerdevs-deezer.p.rapidapi.com/search?q=pink%20floyd', options).then((res) =>{ return res.json()})
+            .then((songs) => {
+
+                let row = document.querySelector('.row');
+            for (let i = 0; i < songs.data.length; i++) {
+                let music = songs.data[i];
+                // console.log(music);
+                let header = document.createElement('h1');
+                header.innerHTML = music.album.title;
+                row.appendChild(header);
+                row.innerHTML += `<img src="${music.album.cover_big}" class="col-12 pb-5" >`
+            }
+            })  
+            .catch((e) => console.log(e));
+            }
+
+
+            const optionss = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com',
+		'X-RapidAPI-Key': '7fe890577dmshc5850220bf7884ep1b9044jsndc74e81940ba'
+	}
+};
+const fetchMusic2 = () =>{
+fetch('https://deezerdevs-deezer.p.rapidapi.com/search?q=daft%20punk', optionss)
+	.then(response => response.json())
+	.then(musics => {
+        let row = document.querySelector('.row');
+            for (let i = 0; i < musics.data.length; i++) {
+                let music = musics.data[i];
+                // console.log(music);
+                row.innerHTML += `
+                <div class="card col-4" style="width: 18rem;">
+  <img src="${music.album.cover_big}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${music.album.title}</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>`
+            }
+    })
+	.catch(err => console.error(err));
+}
+    </script>
+</body>
+</html>
